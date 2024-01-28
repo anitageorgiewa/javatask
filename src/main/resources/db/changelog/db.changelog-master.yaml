@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/people.yml
+  - include:
+      file: db/changelog/mails.yml
+  - include:
+      file: db/changelog/addresses.yml
+  - include:
+      file: db/changelog/datafill.sql

@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: mails
+      author: anita
+      changes:
+        - createTable:
+            tableName: t_mails
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: t_people_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mail_type
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mail
+                  type: varchar(40)
+        - addForeignKeyConstraint:
+            baseColumnNames: t_people_id
+            baseTableName: t_mails
+            constraintName: fk_t_people_t_mails_id
+            referencedColumnNames: id
+            referencedTableName: t_people
+            onDelete: CASCADE

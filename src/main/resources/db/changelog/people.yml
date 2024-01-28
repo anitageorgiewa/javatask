@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: people
+      author: anita
+      changes:
+        - createTable:
+            tableName: t_people
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: varchar(90)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: pin
+                  type: varchar(10)
+        - createIndex:
+            columns:
+              - column:
+                  name: full_name
+                  type: varchar(90)
+            indexName: idx_people_full_name
+            tableName: t_people

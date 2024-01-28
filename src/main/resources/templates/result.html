@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Result</h1>
+<table>
+    <thead>
+    <tr>
+        <th> id </th>
+        <th> full name </th>
+        <th> pin </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${peopleResults.empty}">
+        <td colspan="2"> No Results </td>
+    </tr>
+    <tr th:each="people : ${peopleResults}">
+        <td><span th:text="${people.id}"> ID </span></td>
+        <td><span th:text="${people.fullName}"> Full Name </span></td>
+        <td><span th:text="${people.pin}"> PIN </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+

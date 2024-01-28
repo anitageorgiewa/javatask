@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: addresses
+      author: anita
+      changes:
+        - createTable:
+            tableName: t_addresses
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: t_people_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: addr_type
+                  type: varchar(5)
+              - column:
+                  name: addr_info
+                  type: varchar(10)
+        - addForeignKeyConstraint:
+            baseColumnNames: t_people_id
+            baseTableName: t_addresses
+            constraintName: fk_t_people_t_addresses_id
+            referencedColumnNames: id
+            referencedTableName: t_people
+            onDelete: CASCADE

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>People Search</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Search for people</h1>
+<form action="#" th:action="@{/people}" th:object="${search}" method="post">
+    <p>Name: <input type="text" th:field="*{term}"/></p>
+    <p><input type="submit" value="Search"/>
+        <input type="reset" value="Reset"/>
+    </p>
+</form>
+<button onclick="window.location.href='/people/create';">Create people
+</button>
+
+</body>
+</html>

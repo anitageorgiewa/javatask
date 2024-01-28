@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<h1>Create person</h1>
+<form action="#" th:action="@{/people/create}" th:object="${peopleDto}" method="post">
+
+    <table>
+        <tr>
+            <td>Full Name:</td>
+            <td><input type="text" th:field="*{fullName}"/></td>
+            <td th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</td>
+        </tr>
+        <tr>
+            <td>PIN:</td>
+            <td><input type="text" th:field="*{pin}"/></td>
+            <td th:if="${#fields.hasErrors('pin')}" th:errors="*{pin}">Age Error</td>
+        </tr>
+    </table>
+    <input type="submit" value="Create"/>
+    <input type="reset" value="Reset"/>
+</form>
+</body>
+</html>
