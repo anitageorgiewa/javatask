@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Success!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Address</h1>
+<tr th:if="${peopleResults.empty}">
+    <td colspan="2"> No Results </td>
+</tr>
+<tr th:each="people : ${peopleResults}">
+
+    <td><span th:text="${people.id}"> ID </span></td>
+    <td><span th:text="${people.fullName}"> Full Name </span></td>
+    <td><span th:text="${people.pin}"> PIN </span></td>
+    <td>
+        <a href="/people/info/{people.id}">More info</a>
+
+    </td>
+
+</tr>
+<h1>Mail</h1>
+<tr th:if="${peopleResults.empty}">
+    <td colspan="2"> No Results </td>
+</tr>
+<tr th:each="people : ${peopleResults}">
+
+    <td><span th:text="${people.id}"> ID </span></td>
+    <td><span th:text="${people.fullName}"> Full Name </span></td>
+    <td><span th:text="${people.pin}"> PIN </span></td>
+    <td>
+        <a href="/people/info/{people.id}">More info</a>
+
+    </td>
+
+</tr>
+</body>
+</html>

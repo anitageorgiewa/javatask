@@ -1,15 +1,23 @@
 package com.is.javatask.people.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 public class MailsDto {
 
     private Integer id;
 
+    @NotNull
     private Integer peopleId;
 
 
+    @Length(max = 5)
     private String mailType;
 
-
+    @Length(max = 40)
     private String mail;
 
     public Integer getId() {

@@ -1,9 +1,6 @@
 package com.is.javatask.people.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +19,16 @@ public class PeopleEntity {
     @Column
     private String pin;
 
-    @OneToMany
-    @JoinColumn(name="t_people_id")
+    @OneToMany(mappedBy = "t_people_id")
+   // @JoinColumn(name="id" , table = "t_addresses")
+    /*@JoinTable(name = "t_addresses",
+            joinColumns = {@JoinColumn(name = "t_people_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})*/
     private List<AddressesEntity> addresses = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name="t_people_id")
+    @OneToMany(mappedBy = "t_people_id")
+   // @JoinColumn(name="id", table="t_mails")
+
     private List<MailsEntity> mails = new ArrayList<>();
 
     public Integer getId() {

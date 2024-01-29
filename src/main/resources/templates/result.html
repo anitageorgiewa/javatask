@@ -19,12 +19,19 @@
         <td colspan="2"> No Results </td>
     </tr>
     <tr th:each="people : ${peopleResults}">
+
         <td><span th:text="${people.id}"> ID </span></td>
         <td><span th:text="${people.fullName}"> Full Name </span></td>
         <td><span th:text="${people.pin}"> PIN </span></td>
+        <td>
+            <a href="/people/info/{people.id}">More info</a>
+
+        </td>
+
     </tr>
     </tbody>
 </table>
+</td>
 </body>
 </html>
 

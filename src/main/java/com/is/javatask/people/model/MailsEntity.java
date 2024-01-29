@@ -1,8 +1,6 @@
 package com.is.javatask.people.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
@@ -13,15 +11,12 @@ public class MailsEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
-    @NotNull
     @Column(name = "t_people_id")
     private Integer peopleId;
 
     @Column
-    @Length(max = 5)
     private String mailType;
     @Column
-    @Length(max = 40)
     private String mail;
 
     public Integer getId() {
