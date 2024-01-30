@@ -10,7 +10,7 @@ import static jakarta.persistence.GenerationType.*;
 @Table(name = "t_people")
 public class PeopleEntity {
     @Id
-    @Column
+    @Column(insertable=false, updatable=false)
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
@@ -19,16 +19,10 @@ public class PeopleEntity {
     @Column
     private String pin;
 
-    @OneToMany(mappedBy = "t_people_id")
-   // @JoinColumn(name="id" , table = "t_addresses")
-    /*@JoinTable(name = "t_addresses",
-            joinColumns = {@JoinColumn(name = "t_people_id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")})*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "people")
     private List<AddressesEntity> addresses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "t_people_id")
-   // @JoinColumn(name="id", table="t_mails")
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "people")
     private List<MailsEntity> mails = new ArrayList<>();
 
     public Integer getId() {

@@ -1,6 +1,6 @@
 package com.is.javatask.people;
 
-import com.is.javatask.people.dto.FullInfoDto;
+import com.is.javatask.people.dto.MailsDto;
 import com.is.javatask.people.dto.PeopleDto;
 import com.is.javatask.people.dto.Search;
 import jakarta.validation.Valid;
@@ -63,14 +63,19 @@ public class PeopleController {
         return "contacts";
     }
 
-    @PostMapping("/people/info")
-    public String searchSubmitMoreInfo(@ModelAttribute PeopleDto peopleDto, Model model) {
-        FullInfoDto fullInfoDto = new FullInfoDto();
-        fullInfoDto.setPeopleId(peopleDto.getId());
-        fullInfoDto.setFullName(peopleDto.getFullName());
-      //  List<FullInfoDto> info = peopleService.fullSearch();
-        //model.addAttribute("peopleResults", peopleDtos);
+    @GetMapping("/people/mails")
+    public String findAllMails(@ModelAttribute Integer id, Model model) {
+
+        List<MailsDto> info = peopleService.findAllMails(id);
+        model.addAttribute("mailsResults", info);
         return "people";
     }
+    /*
+    @GetMapping("/people/addresses")
+    public String findAllAddresses(@ModelAttribute Integer id, Model model) {
 
+        List<MailsDto> info = peopleService.findAllMails(id);
+        model.addAttribute("addrResults", info);
+        return "people";
+    }*/
 }

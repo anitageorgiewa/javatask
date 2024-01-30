@@ -6,14 +6,15 @@
 </head>
 <body>
 <h1>Address</h1>
-<tr th:if="${peopleResults.empty}">
+<tr th:if="${mailsResult.empty}">
     <td colspan="2"> No Results </td>
 </tr>
-<tr th:each="people : ${peopleResults}">
+<tr th:each="mail : ${mailsResult}">
 
-    <td><span th:text="${people.id}"> ID </span></td>
-    <td><span th:text="${people.fullName}"> Full Name </span></td>
-    <td><span th:text="${people.pin}"> PIN </span></td>
+    <td><span th:text="${mail.id}"> ID </span></td>
+    <td><span th:text="${mail.mailType}"> Full Name </span></td>
+    <td><span th:text="${mail.mail}"> PIN </span></td>
+    <td><span th:text="${mail.peopleId}"> Person id </span></td>
     <td>
         <a href="/people/info/{people.id}">More info</a>
 

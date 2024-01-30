@@ -13,7 +13,6 @@ public class MailsDto {
     @NotNull
     private Integer peopleId;
 
-
     @Length(max = 5)
     private String mailType;
 

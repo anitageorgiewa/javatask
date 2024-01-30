@@ -7,12 +7,13 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "t_mails")
 public class MailsEntity {
     @Id
-    @Column
+    @Column(name = "id")
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
-    @Column(name = "t_people_id")
-    private Integer peopleId;
+    @ManyToOne
+    @JoinColumn(name="t_people_id", nullable=false)
+    private PeopleEntity people;
 
     @Column
     private String mailType;
@@ -25,14 +26,6 @@ public class MailsEntity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getPeopleId() {
-        return peopleId;
-    }
-
-    public void setPeopleId(Integer peopleId) {
-        this.peopleId = peopleId;
     }
 
     public String getMailType() {
@@ -49,5 +42,13 @@ public class MailsEntity {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public PeopleEntity getPeople() {
+        return people;
+    }
+
+    public void setPeople(PeopleEntity people) {
+        this.people = people;
     }
 }
