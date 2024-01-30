@@ -12,7 +12,7 @@
         </tr>
         <tr>
             <td>PIN:</td>
-            <td><input type="text" th:field="*{pin}"/></td>
+            <td><input type="text" th:field="*{pin}" maxlength="10"/></td>
             <td th:if="${#fields.hasErrors('pin')}" th:errors="*{pin}">Age Error</td>
         </tr>
     </table>

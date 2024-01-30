@@ -1,7 +1,9 @@
 package com.is.javatask.people;
 
+import com.is.javatask.people.dto.AddressesDto;
 import com.is.javatask.people.dto.MailsDto;
 import com.is.javatask.people.dto.PeopleDto;
+import com.is.javatask.people.model.AddressesEntity;
 import com.is.javatask.people.model.MailsEntity;
 import com.is.javatask.people.model.PeopleEntity;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PeopleMapper {
+public class Mappers {
 
     public PeopleDto map(PeopleEntity peopleEntity) {
         PeopleDto peopleDto = new PeopleDto();
@@ -58,14 +60,36 @@ public class PeopleMapper {
         return mailsEntity;
     }
 
-    public List<MailsDto> mapMails(List<MailsEntity> mailsEntity) {
-        List<MailsDto> mailsDto = new ArrayList<>(mailsEntity.size());
+    public AddressesDto map(AddressesEntity addressesEntity) {
+        AddressesDto addressesDto = new AddressesDto();
+        addressesDto.setPeopleId(addressesEntity.getPeople().getId());
+        addressesDto.setId(addressesEntity.getId());
+        addressesDto.setAddrType(addressesEntity.getAddrType());
+        addressesDto.setAddrInfo(addressesEntity.getAddrInfo());
+        return addressesDto;
+    }
+    public AddressesEntity map(AddressesDto addressesDto, PeopleEntity people) {
+        AddressesEntity addressesEntity = new AddressesEntity();
+        addressesEntity.setPeople(people);
+        addressesEntity.setId(addressesDto.getId());
+        addressesEntity.setAddrType(addressesDto.getAddrType());
+        addressesEntity.setAddrInfo(addressesDto.getAddrInfo());
+        return addressesEntity;
+    }
+    public List<MailsDto> mapMails(List<MailsEntity> mails) {
+        List<MailsDto> mailsDto = new ArrayList<>(mails.size());
 
-        mailsEntity.forEach(mails -> {
-            mailsDto.add(map(mails));
-        });
+        mails.forEach(mail -> mailsDto.add(map(mail)));
 
         return mailsDto;
+    }
+
+    public List<AddressesDto> mapAddresses(List<AddressesEntity> addresses) {
+        List<AddressesDto> addressesDtos = new ArrayList<>(addresses.size());
+
+        addresses.forEach(address -> addressesDtos.add(map(address)));
+
+        return addressesDtos;
     }
 
 }

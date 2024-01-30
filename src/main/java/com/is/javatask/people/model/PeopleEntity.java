@@ -64,4 +64,8 @@ public class PeopleEntity {
     public void setMails(List<MailsEntity> mails) {
         this.mails = mails;
     }
+
+    public void addMail(MailsEntity mail) {
+        this.mails.add(mail);
+    }
 }

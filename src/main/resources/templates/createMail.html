@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<h1>Create mail</h1>
+<form action="#" th:action="@{/people/create/mail}" th:object="${mailsDto}" method="post">
+    <input type="hidden" th:field="*{peopleId}"/>
+    <table>
+        <tr>
+            <td>Mail: </td>
+            <td><input type="text" th:field="*{mail}" /></td>
+            <td th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Mail Error</td>
+        </tr>
+        <tr>
+            <td>Mail type:</td>
+            <td><input type="text" th:field="*{mailType}" maxlength="5"/></td>
+            <td th:if="${#fields.hasErrors('mailType')}" th:errors="*{mailType}">Mail type Error</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Create"/>
+    <input type="reset" value="Reset"/>
+</form>
+
+</body>
+</html>

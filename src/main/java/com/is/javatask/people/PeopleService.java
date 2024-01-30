@@ -1,7 +1,7 @@
 package com.is.javatask.people;
 
-import com.is.javatask.people.dto.MailsDto;
-import com.is.javatask.people.dto.PeopleDto;
+import com.is.javatask.people.dto.*;
+import com.is.javatask.people.model.AddressesEntity;
 import com.is.javatask.people.model.MailsEntity;
 import com.is.javatask.people.model.PeopleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,32 +12,52 @@ import java.util.List;
 @Service
 public class PeopleService {
 
-    private PeopleRepository repository;
-    private MailsRepository mailsRepo;
-    private AddressesRepository addrRepo;
-    private PeopleMapper peopleMapper;
+    private PeopleRepository peopleRepository;
+    private Mappers mappers;
+    private MailsRepository mailsRepository;
+    private AddressesRepository addressesRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository repository, PeopleMapper peopleMapper,MailsRepository mailsRepo,AddressesRepository addrRepo) {
-        this.repository = repository;
-        this.peopleMapper = peopleMapper;
-        this.addrRepo = addrRepo;
-        this.mailsRepo = mailsRepo;
+    public PeopleService(PeopleRepository peopleRepository, Mappers mappers,MailsRepository mailsRepository,AddressesRepository addressesRepository) {
+        this.peopleRepository = peopleRepository;
+        this.mappers = mappers;
+        this.mailsRepository = mailsRepository;
+        this.addressesRepository = addressesRepository;
     }
 
     public List<PeopleDto> searchPeople(String search) {
-        return peopleMapper.map(repository.findByFullNameIgnoreCaseContaining(search));
+        return mappers.map(peopleRepository.findByFullNameIgnoreCaseContaining(search));
     }
 
-    public void create(PeopleDto peopleDto){
+    public PeopleEntity create(PeopleDto peopleDto){
          peopleDto.setId(null);
-         PeopleEntity peopleEntity = peopleMapper.map(peopleDto);
-         repository.save(peopleEntity);
+         PeopleEntity peopleEntity = mappers.map(peopleDto);
+         return peopleRepository.save(peopleEntity);
     }
 
-    public  List<MailsDto> findAllMails(Integer peopleID){
-        return  peopleMapper.mapMails( mailsRepo.findByPeopleId(peopleID));
-    }
+    public void edit(FullProfileDto profile){
+        PeopleEntity person = peopleRepository.updateById();
+        MailsEntity mail = mailsRepository.updateById();
+        AddressesEntity address = addressesRepository.updateById();
 
+    }
+    public void createMail(MailsDto mailsDto){
+        PeopleEntity people = peopleRepository.getReferenceById(mailsDto.getPeopleId());
+        MailsEntity mailsEntity = mappers.map(mailsDto,people);
+        people.addMail(mailsEntity);
+        mailsRepository.save(mailsEntity);
+    }
+    public void createAddress(AddressesDto addressesDto){
+        PeopleEntity people = peopleRepository.getReferenceById(addressesDto.getPeopleId());
+        AddressesEntity addressesEntity = mappers.map(addressesDto, people);
+        addressesRepository.save(addressesEntity);
+    }
+    public ContactsDto getContacts(Integer peopleID){
+        PeopleEntity people = peopleRepository.getReferenceById(peopleID);
+        return new ContactsDto(
+                mappers.mapMails(people.getMails()),
+                mappers.mapAddresses(people.getAddresses())
+        );
+    }
 
 }

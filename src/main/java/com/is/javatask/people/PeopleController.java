@@ -1,18 +1,15 @@
 package com.is.javatask.people;
 
-import com.is.javatask.people.dto.MailsDto;
-import com.is.javatask.people.dto.PeopleDto;
-import com.is.javatask.people.dto.Search;
+import com.is.javatask.people.dto.*;
+import com.is.javatask.people.model.PeopleEntity;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,12 +40,15 @@ public class PeopleController {
     }
 
     @PostMapping("/people/create")
-    public String create(@Valid PeopleDto peopleDto, BindingResult bindingResult){
+    public String create(@Valid PeopleDto peopleDto, BindingResult bindingResult, Model model){
          if (bindingResult.hasErrors()) {
             return "create";
          }
-         peopleService.create(peopleDto);
-         return "redirectAfterCreate";
+        PeopleEntity people = peopleService.create(peopleDto);
+        MailsDto mailsDto = new MailsDto();
+        mailsDto.setPeopleId(people.getId());
+        model.addAttribute("mailsDto",mailsDto);
+        return "createMail";
     }
 
     @GetMapping("/people/create")
@@ -57,25 +57,44 @@ public class PeopleController {
         return "create";
     }
 
-    @GetMapping("/people/info/{id}")
-    public String searchMoreInfo(Model model, @PathVariable String id) {
-        model.addAttribute("id",id);
+    @GetMapping("/people/contacts")
+    public String showContacts(@RequestParam("id") Integer peopleId, Model model) {
+        var contacts = peopleService.getContacts(peopleId);
+        model.addAttribute("contacts", contacts);
         return "contacts";
     }
 
-    @GetMapping("/people/mails")
-    public String findAllMails(@ModelAttribute Integer id, Model model) {
+    @PostMapping("/people/create/mail")
+    public String createMail(@Valid MailsDto mailsDto, BindingResult bindingResult, Model model){
 
-        List<MailsDto> info = peopleService.findAllMails(id);
-        model.addAttribute("mailsResults", info);
-        return "people";
+        if (bindingResult.hasErrors()) {
+            return "createMail";
+        }
+        mailsDto.setPeopleId(mailsDto.getPeopleId());
+        peopleService.createMail(mailsDto);
+        AddressesDto addressesDto = new AddressesDto();
+        addressesDto.setPeopleId(mailsDto.getPeopleId());
+        model.addAttribute("addressesDto",addressesDto);
+        return "createAddress";
     }
-    /*
-    @GetMapping("/people/addresses")
-    public String findAllAddresses(@ModelAttribute Integer id, Model model) {
+    @PostMapping("/people/create/address")
+    public String createAddress(@Valid AddressesDto addressesDto, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "createAddress";
+        }
+        addressesDto.setPeopleId(addressesDto.getPeopleId());
+        peopleService.createAddress(addressesDto);
+        return "redirectForMoreInfo";
+    }
 
-        List<MailsDto> info = peopleService.findAllMails(id);
-        model.addAttribute("addrResults", info);
-        return "people";
-    }*/
+    @PutMapping("/people/edit")
+    public String updatePerson(@Valid FullProfileDto profile, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
+            return "people";
+        }
+
+        model.addAttribute("profile",profile);
+
+        return  "edit";
+    }
 }

@@ -17,4 +17,6 @@ public interface MailsRepository extends JpaRepository<MailsEntity,Integer> {
             """
     )
     List<MailsEntity> findByPeopleId(@Param("peopleId") Integer peopleId);
+    MailsEntity updateById(Integer id);
+
 }

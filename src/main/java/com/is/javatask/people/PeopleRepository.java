@@ -12,5 +12,5 @@ import java.util.List;
 public interface PeopleRepository extends JpaRepository<PeopleEntity,Integer> {
     //Not optimal, it doesn't use the index
     List<PeopleEntity> findByFullNameIgnoreCaseContaining(String fullName);
-
+    PeopleEntity updateById(Integer id);
 }

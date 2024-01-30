@@ -1,40 +1,51 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Success!</title>
+    <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
-<h1>Address</h1>
-<tr th:if="${mailsResult.empty}">
-    <td colspan="2"> No Results </td>
-</tr>
-<tr th:each="mail : ${mailsResult}">
+<h1>Result</h1>
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> Mail</th>
+        <th> Mail type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="mails : ${contacts.mails}">
 
-    <td><span th:text="${mail.id}"> ID </span></td>
-    <td><span th:text="${mail.mailType}"> Full Name </span></td>
-    <td><span th:text="${mail.mail}"> PIN </span></td>
-    <td><span th:text="${mail.peopleId}"> Person id </span></td>
-    <td>
-        <a href="/people/info/{people.id}">More info</a>
+        <td><span th:text="${mails.id}"> ID </span></td>
+        <td><span th:text="${mails.mail}"> Full Name </span></td>
+        <td><span th:text="${mails.mailType}"> PIN </span></td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> Address type</th>
+        <th> Address info</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="address : ${contacts.addresses}">
 
-    </td>
-
-</tr>
-<h1>Mail</h1>
-<tr th:if="${peopleResults.empty}">
-    <td colspan="2"> No Results </td>
-</tr>
-<tr th:each="people : ${peopleResults}">
-
-    <td><span th:text="${people.id}"> ID </span></td>
-    <td><span th:text="${people.fullName}"> Full Name </span></td>
-    <td><span th:text="${people.pin}"> PIN </span></td>
-    <td>
-        <a href="/people/info/{people.id}">More info</a>
-
-    </td>
-
-</tr>
+        <td><span th:text="${address.id}"> ID </span></td>
+        <td><span th:text="${address.addrType}"> PIN </span></td>
+        <td><span th:text="${address.addrInfo}"> PIN </span></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
+
+

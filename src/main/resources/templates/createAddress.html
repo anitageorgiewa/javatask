@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<h1>Create address</h1>
+<form action="#" th:action="@{/people/create/address}" th:object="${addressesDto}" method="post">
+    <input type="hidden" th:field="*{peopleId}"/>
+    <table>
+        <tr>
+            <td>Address type: </td>
+            <td><input type="text" th:field="*{addrType}" maxlength="5"/></td>
+            <td th:if="${#fields.hasErrors('addrType')}" th:errors="*{addrType}">Address type Error</td>
+        </tr>
+        <tr>
+            <td>Address info:</td>
+            <td><input type="text" th:field="*{addrInfo}" maxlength="10"/></td>
+            <td th:if="${#fields.hasErrors('addrInfo')}" th:errors="*{addrInfo}">Address info Error</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Create"/>
+    <input type="reset" value="Reset"/>
+</form>
+
+</body>
+</html>

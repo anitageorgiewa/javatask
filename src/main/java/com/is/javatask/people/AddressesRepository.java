@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Table(name="t_addresses" )
 public interface AddressesRepository extends JpaRepository<AddressesEntity,Integer> {
+    AddressesEntity updateById(Integer id);
+
 }
