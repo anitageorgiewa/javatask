@@ -35,10 +35,10 @@
             </thead>
             <tbody>
             <tr th:each="address, itemStat : *{addresses}">
-                <td><input maxlength="5" th:field="*{addresses[__${itemStat.index}__].addrType}" /></td>
-<!--                <td th:if="${#fields.hasErrors('address.addrType')}" th:errors="${address.addrType}">Address type Error</td>-->
-                <td><input maxlength="10"th:field="*{addresses[__${itemStat.index}__].addrInfo}" /></td>
-<!--                <td th:if="${#fields.hasErrors('address.addrInfo')}" th:errors="${address.addrInfo}">Address info Error</td>-->
+                <td><input maxlength="5" th:field="*{addresses[__${itemStat.index}__].addrType}"/></td>
+                <!--                <td th:if="${#fields.hasErrors('address.addrType')}" th:errors="${address.addrType}">Address type Error</td>-->
+                <td><input maxlength="10" th:field="*{addresses[__${itemStat.index}__].addrInfo}"/></td>
+                <!--                <td th:if="${#fields.hasErrors('address.addrInfo')}" th:errors="${address.addrInfo}">Address info Error</td>-->
             </tr>
             </tbody>
         </table>
@@ -54,15 +54,15 @@
         <table>
             <thead>
             <tr>
-                <th> Mail </th>
+                <th> Mail</th>
                 <th> Mail type:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="mail, itemStat : *{mails}">
-                <td><input  maxlength="5" th:field="*{mails[__${itemStat.index}__].mail}" /></td>
+                <td><input maxlength="5" th:field="*{mails[__${itemStat.index}__].mail}"/></td>
                 <!--                <td th:if="${#fields.hasErrors('address.addrType')}" th:errors="${address.addrType}">Address type Error</td>-->
-                <td><input  maxlength="10"th:field="*{mails[__${itemStat.index}__].mailType}" /></td>
+                <td><input maxlength="10" th:field="*{mails[__${itemStat.index}__].mailType}"/></td>
                 <!--                <td th:if="${#fields.hasErrors('address.addrInfo')}" th:errors="${address.addrInfo}">Address info Error</td>-->
             </tr>
             </tbody>

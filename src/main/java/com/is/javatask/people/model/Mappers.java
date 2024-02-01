@@ -1,11 +1,10 @@
-package com.is.javatask.people;
+package com.is.javatask.people.model;
 
-import com.is.javatask.people.dto.AddressesDto;
-import com.is.javatask.people.dto.MailsDto;
-import com.is.javatask.people.dto.PeopleDto;
-import com.is.javatask.people.model.AddressesEntity;
-import com.is.javatask.people.model.MailsEntity;
-import com.is.javatask.people.model.PeopleEntity;
+import com.is.javatask.people.address.AddressesDto;
+import com.is.javatask.people.address.AddressesEntity;
+import com.is.javatask.people.mail.MailsDto;
+import com.is.javatask.people.mail.MailsEntity;
+import com.is.javatask.people.model.dto.PeopleDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -68,6 +67,7 @@ public class Mappers {
         addressesDto.setAddrInfo(addressesEntity.getAddrInfo());
         return addressesDto;
     }
+
     public AddressesEntity map(AddressesDto addressesDto, PeopleEntity people) {
         AddressesEntity addressesEntity = new AddressesEntity();
         addressesEntity.setPeople(people);
@@ -76,6 +76,7 @@ public class Mappers {
         addressesEntity.setAddrInfo(addressesDto.getAddrInfo());
         return addressesEntity;
     }
+
     public List<MailsDto> mapMails(List<MailsEntity> mails) {
         List<MailsDto> mailsDto = new ArrayList<>(mails.size());
 

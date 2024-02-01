@@ -1,4 +1,4 @@
-package com.is.javatask.people.dto;
+package com.is.javatask.people.model.dto;
 
 public class Search {
     private String term;

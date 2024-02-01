@@ -1,10 +1,7 @@
-package com.is.javatask.people.dto;
+package com.is.javatask.people.mail;
 
-import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
-
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 public class MailsDto {
 

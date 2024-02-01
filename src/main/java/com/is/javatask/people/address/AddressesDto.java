@@ -1,4 +1,4 @@
-package com.is.javatask.people.dto;
+package com.is.javatask.people.address;
 
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;

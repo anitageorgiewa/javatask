@@ -1,16 +1,19 @@
 package com.is.javatask.people.model;
 
+import com.is.javatask.people.address.AddressesEntity;
+import com.is.javatask.people.mail.MailsEntity;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "t_people")
 public class PeopleEntity {
     @Id
-    @Column(insertable=false, updatable=false)
+    @Column
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 

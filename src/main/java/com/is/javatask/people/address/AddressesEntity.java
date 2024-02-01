@@ -1,24 +1,20 @@
-package com.is.javatask.people.model;
+package com.is.javatask.people.address;
 
+import com.is.javatask.people.model.PeopleEntity;
 import jakarta.persistence.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "t_addresses")
-@SecondaryTable(name="t_people")
-public class AddressesEntity{
+@SecondaryTable(name = "t_people")
+public class AddressesEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
-    //@Column(name = "t_people_id")
-    //@JoinColumn(name = "id", table="t_people")
-    //@Column(insertable=false, updatable=false)
-  //  @ManyToOne(targetEntity = PeopleEntity.class);//(targetEntity = PeopleEntity.class)
-    //@JoinColumn(name = "peopleId", insertable=false, updatable=false);//, referencedColumnName="id", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="t_people_id", nullable=false)
+    @JoinColumn(name = "t_people_id", nullable = false)
     private PeopleEntity people;
     @Column
     private String addrType;

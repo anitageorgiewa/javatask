@@ -1,4 +1,7 @@
-package com.is.javatask.people.dto;
+package com.is.javatask.people.model.dto;
+
+import com.is.javatask.people.address.AddressesDto;
+import com.is.javatask.people.mail.MailsDto;
 
 import java.util.List;
 

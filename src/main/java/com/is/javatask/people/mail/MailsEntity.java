@@ -1,8 +1,10 @@
-package com.is.javatask.people.model;
+package com.is.javatask.people.mail;
 
+import com.is.javatask.people.model.PeopleEntity;
 import jakarta.persistence.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "t_mails")
 public class MailsEntity {
@@ -12,7 +14,7 @@ public class MailsEntity {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="t_people_id", nullable=false)
+    @JoinColumn(name = "t_people_id", nullable = false)
     private PeopleEntity people;
 
     @Column

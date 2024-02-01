@@ -6,7 +6,7 @@
     <input type="hidden" th:field="*{peopleId}"/>
     <table>
         <tr>
-            <td>Address type: </td>
+            <td>Address type:</td>
             <td><input type="text" th:field="*{addrType}" maxlength="5"/></td>
             <td th:if="${#fields.hasErrors('addrType')}" th:errors="*{addrType}">Address type Error</td>
         </tr>
