@@ -38,6 +38,19 @@ public class PeopleController {
         return "result";
     }
 
+    @GetMapping("/people/contacts")
+    public String showContacts(@RequestParam("id") Integer peopleId, Model model) {
+        var contacts = peopleService.getContacts(peopleId);
+        model.addAttribute("contacts", contacts);
+        return "contacts";
+    }
+
+    @GetMapping("/people/create")
+    public String create(Model model){
+        model.addAttribute("peopleDto",new PeopleDto());
+        return "create";
+    }
+
     @PostMapping("/people/create")
     public String create(@Valid PeopleDto peopleDto, BindingResult bindingResult, Model model){
          if (bindingResult.hasErrors()) {
@@ -50,19 +63,19 @@ public class PeopleController {
         return "createMail";
     }
 
-    @GetMapping("/people/create")
-    public String create(Model model){
-        model.addAttribute("peopleDto",new PeopleDto());
-        return "create";
-    }
+    @PostMapping("/people/create/mail")
+    public String createAddress(@Valid MailsDto mailsDto, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
+            return "createMail";
+        }
+        mailsDto.setPeopleId(mailsDto.getPeopleId());
+        Integer peopleId = peopleService.createMail(mailsDto);
+        AddressesDto addressesDto =  new AddressesDto();
+        addressesDto.setPeopleId(peopleId);
+        model.addAttribute("addressesDto",addressesDto);
 
-    @GetMapping("/people/contacts")
-    public String showContacts(@RequestParam("id") Integer peopleId, Model model) {
-        var contacts = peopleService.getContacts(peopleId);
-        model.addAttribute("contacts", contacts);
-        return "contacts";
+        return "createAddress";
     }
-
 
     @PostMapping("/people/create/address")
     public String createAddress(@Valid AddressesDto addressesDto, BindingResult bindingResult){

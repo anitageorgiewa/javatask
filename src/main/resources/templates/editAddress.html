@@ -23,9 +23,9 @@
         </tr>
         </thead>
         <tbody>
-        <td><input type="text" th:field="*{addrType}"/></td>
+        <td><input type="text" th:field="*{addrType}" maxlength="5"/></td>
         <td th:if="${#fields.hasErrors('addrType')}" th:errors="*{addrType}">Name Error</td>
-        <td><input type="text" th:field="*{addrInfo}"/></td>
+        <td><input type="text" th:field="*{addrInfo}" maxlength="10"/></td>
         <td th:if="${#fields.hasErrors('addrInfo')}" th:errors="*{addrInfo}">Name Error</td>
         </tbody>
     </table>

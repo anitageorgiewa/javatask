@@ -80,11 +80,12 @@ public class PeopleService {
                 mappers.mapAddresses(person.getAddresses()));
     }
 
-    public void createMail(MailsDto mailsDto) {
+    public Integer createMail(MailsDto mailsDto) {
         PeopleEntity people = peopleRepository.getReferenceById(mailsDto.getPeopleId());
         MailsEntity mailsEntity = mappers.map(mailsDto, people);
         people.addMail(mailsEntity);
         mailsRepository.save(mailsEntity);
+        return mailsEntity.getPeople().getId();
     }
 
     public void createAddress(AddressesDto addressesDto) {
