@@ -36,17 +36,25 @@ public class PeopleService {
          return peopleRepository.save(peopleEntity);
     }
 
-    public void editMail(List<MailsDto> mail){
-        for (MailsDto mailsDto : mail) {
-            PeopleEntity people = peopleRepository.getReferenceById(mailsDto.getPeopleId());
-            mailsRepository.updateById(mappers.map(mailsDto, people));
-            }
+    public void editMail(MailsDto mail){
+
+        MailsEntity mailsEntity = mailsRepository.getReferenceById(mail.getId());
+        mailsEntity.setMailType(mail.getMailType());
+        mailsEntity.setMail(mail.getMail());
+
+        mailsRepository.save(mailsEntity);
+
+    }
+    public void editAddress(AddressesDto address){
+
+        AddressesEntity addressesEntity = addressesRepository.getReferenceById(address.getId());
+        addressesEntity.setAddrInfo(address.getAddrInfo());
+        addressesEntity.setAddrType(address.getAddrType());
+
+        addressesRepository.save(addressesEntity);
+
     }
 
-    public void editAddress(AddressesDto address){
-        PeopleEntity people = peopleRepository.getReferenceById(address.getPeopleId());
-        addressesRepository.updateById(mappers.map(address, people));
-    }
     public void editPerson(PeopleDto person){
         peopleRepository.updateById(mappers.map(person));
     }
@@ -78,4 +86,10 @@ public class PeopleService {
         );
     }
 
+    public MailsDto getMails(Integer id){
+       return mappers.map(mailsRepository.getReferenceById(id));
+    }
+    public AddressesDto getAddress(Integer id){
+        return mappers.map(addressesRepository.getReferenceById(id));
+    }
 }

@@ -63,19 +63,7 @@ public class PeopleController {
         return "contacts";
     }
 
-    @PostMapping("/people/create/mail")
-    public String createMail(@Valid MailsDto mailsDto, BindingResult bindingResult, Model model){
 
-        if (bindingResult.hasErrors()) {
-            return "createMail";
-        }
-        mailsDto.setPeopleId(mailsDto.getPeopleId());
-        peopleService.createMail(mailsDto);
-        AddressesDto addressesDto = new AddressesDto();
-        addressesDto.setPeopleId(mailsDto.getPeopleId());
-        model.addAttribute("addressesDto",addressesDto);
-        return "createAddress";
-    }
     @PostMapping("/people/create/address")
     public String createAddress(@Valid AddressesDto addressesDto, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
@@ -86,37 +74,36 @@ public class PeopleController {
         return "redirectForMoreInfo";
     }
 
-    @GetMapping("/people/edit")
-    public String getInfoForUpdate(@RequestParam Integer id,Model model){
-        FullProfileDto fullProfileDto = peopleService.getProfile(id);
-        model.addAttribute("people",fullProfileDto.getPerson());
+    @GetMapping("/people/edit/mail")
+    public String getInfoForUpdateMail(@RequestParam("id") Integer id,Model model){
 
-        model.addAttribute("mails",fullProfileDto.getMails());
-        model.addAttribute("addressesForm",new UpdateAddressesForm(fullProfileDto.getAddresses()));
-        model.addAttribute("mailsForm",new UpdateMailForm(fullProfileDto.getMails()));
-        return "edit";
+        model.addAttribute("mails",peopleService.getMails(id));
+        return "editMail";
     }
 
-    @PostMapping("/people/edit/mails")
-    public String saveEdit(@Valid @RequestParam UpdateMailForm mails
-                           ){
-
-
-        peopleService.editMail(mails.getMails());
-      //  model.addAttribute("contacts",contacts);
-
-        return  "edit";
-    }
-/*
-    @PostMapping("/people/edit")
-    public String updatePerson(@Valid @RequestBody FullProfileDto profile, BindingResult bindingResult, Model model,
-                               @PathVariable Integer id){
+    @PostMapping("/people/edit/mail")
+    public String saveEditMail(@Valid MailsDto mails, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            return "people";
+            return "editMail";
         }
-        peopleService.edit(profile);
-        model.addAttribute("profile",profile);
+        peopleService.editMail(mails);
 
-        return  "edit";
-    }*/
+        return  "redirect:/people/contacts?id=" + mails.getPeopleId();
+    }
+    @GetMapping("/people/edit/address")
+    public String getInfoForUpdateAddress(@RequestParam("id") Integer id,Model model){
+
+        model.addAttribute("address",peopleService.getAddress(id));
+        return "editAddress";
+    }
+
+    @PostMapping("/people/edit/address")
+    public String saveEdit(@Valid AddressesDto address, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "editAddress";
+        }
+        peopleService.editAddress(address);
+
+        return  "redirect:/people/contacts?id=" + address.getPeopleId();
+    }
 }

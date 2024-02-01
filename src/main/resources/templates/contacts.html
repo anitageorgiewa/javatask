@@ -28,13 +28,11 @@
         <td><span th:text="${mails.mail}"> Full Name </span></td>
         <td><span th:text="${mails.mailType}"> PIN </span></td>
         <td>
-            <a th:href="@{/people/edit(id=${mails.peopleId})}">Edit info</a>
+            <a th:href="@{/people/edit/mail(id=${mails.id})}">Edit mail</a>
         </td>
 
     </tr>
     </tbody>
-</table>
-<table>
     <thead>
     <tr>
         <th> Id</th>
@@ -48,10 +46,12 @@
         <td><span th:text="${address.id}"> ID </span></td>
         <td><span th:text="${address.addrType}"> PIN </span></td>
         <td><span th:text="${address.addrInfo}"> PIN </span></td>
+        <td>
+            <a th:href="@{/people/edit/address(id=${address.id})}">Edit address</a>
+        </td>
     </tr>
 
     </tbody>
-
 </table>
 </body>
 </html>

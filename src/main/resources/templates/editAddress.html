@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Update address</h1>
+<form action="#" th:action="@{/people/edit/address}" th:object="${address}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{peopleId}">
+    <table>
+        <thead>
+        <tr>
+            <th> Address type</th>
+            <th> Address info</th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:field="*{addrType}"/></td>
+        <td th:if="${#fields.hasErrors('addrType')}" th:errors="*{addrType}">Name Error</td>
+        <td><input type="text" th:field="*{addrInfo}"/></td>
+        <td th:if="${#fields.hasErrors('addrInfo')}" th:errors="*{addrInfo}">Name Error</td>
+        </tbody>
+    </table>
+    <input type="submit" value="Save"/>
+</form>
+</body>
+</html>
+
+
