@@ -4,6 +4,24 @@ import java.util.List;
 
 public class ContactsDto {
     private List<MailsDto> mails;
+    private MailsDto mail;
+    private AddressesDto address;
+
+    public MailsDto getMail() {
+        return mail;
+    }
+
+    public void setMail(MailsDto mail) {
+        this.mail = mail;
+    }
+
+    public AddressesDto getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressesDto address) {
+        this.address = address;
+    }
 
     private List<AddressesDto> addresses;
 

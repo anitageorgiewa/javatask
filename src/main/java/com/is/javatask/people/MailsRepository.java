@@ -17,6 +17,14 @@ public interface MailsRepository extends JpaRepository<MailsEntity,Integer> {
             """
     )
     List<MailsEntity> findByPeopleId(@Param("peopleId") Integer peopleId);
-    MailsEntity updateById(Integer id);
+    @Query(
+            value = """
+               UPDATE  t_mails
+               set mail = :mail.mail
+               , mail_type = :mail.mailType
+               WHERE t_people_id = :mail.peopleId
+            """, nativeQuery = true
+    )
+    MailsEntity updateById(MailsEntity mail);
 
 }

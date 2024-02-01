@@ -5,7 +5,6 @@ import com.is.javatask.people.model.PeopleEntity;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,14 +86,37 @@ public class PeopleController {
         return "redirectForMoreInfo";
     }
 
-    @PutMapping("/people/edit")
-    public String updatePerson(@Valid FullProfileDto profile, BindingResult bindingResult, Model model){
-        if (bindingResult.hasErrors()) {
-            return "people";
-        }
+    @GetMapping("/people/edit")
+    public String getInfoForUpdate(@RequestParam Integer id,Model model){
+        FullProfileDto fullProfileDto = peopleService.getProfile(id);
+        model.addAttribute("people",fullProfileDto.getPerson());
 
-        model.addAttribute("profile",profile);
+        model.addAttribute("mails",fullProfileDto.getMails());
+        model.addAttribute("addressesForm",new UpdateAddressesForm(fullProfileDto.getAddresses()));
+        model.addAttribute("mailsForm",new UpdateMailForm(fullProfileDto.getMails()));
+        return "edit";
+    }
+
+    @PostMapping("/people/edit/mails")
+    public String saveEdit(@Valid @RequestParam UpdateMailForm mails
+                           ){
+
+
+        peopleService.editMail(mails.getMails());
+      //  model.addAttribute("contacts",contacts);
 
         return  "edit";
     }
+/*
+    @PostMapping("/people/edit")
+    public String updatePerson(@Valid @RequestBody FullProfileDto profile, BindingResult bindingResult, Model model,
+                               @PathVariable Integer id){
+        if (bindingResult.hasErrors()) {
+            return "people";
+        }
+        peopleService.edit(profile);
+        model.addAttribute("profile",profile);
+
+        return  "edit";
+    }*/
 }

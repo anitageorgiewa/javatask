@@ -1,14 +1,16 @@
 package com.is.javatask.people.dto;
 
+import java.util.List;
+
 public class FullProfileDto {
     PeopleDto person;
-    MailsDto mail;
-    AddressesDto address;
+    List<MailsDto> mails;
+    List<AddressesDto> addresses;
 
-    public FullProfileDto(PeopleDto person, MailsDto mail, AddressesDto address) {
+    public FullProfileDto(PeopleDto person, List<MailsDto> mails, List<AddressesDto> addresses) {
         this.person = person;
-        this.mail = mail;
-        this.address = address;
+        this.mails = mails;
+        this.addresses = addresses;
     }
 
     public PeopleDto getPerson() {
@@ -19,19 +21,19 @@ public class FullProfileDto {
         this.person = person;
     }
 
-    public MailsDto getMail() {
-        return mail;
+    public List<MailsDto> getMails() {
+        return mails;
     }
 
-    public void setMail(MailsDto mail) {
-        this.mail = mail;
+    public void setMails(List<MailsDto> mails) {
+        this.mails = mails;
     }
 
-    public AddressesDto getAddress() {
-        return address;
+    public List<AddressesDto> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(AddressesDto address) {
-        this.address = address;
+    public void setAddresses(List<AddressesDto> addresses) {
+        this.addresses = addresses;
     }
 }

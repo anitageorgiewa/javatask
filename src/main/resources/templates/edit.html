@@ -3,8 +3,7 @@
 <body>
 <h1>Edit Information</h1>
 <h2>Edit person</h2>
-<form action="#" th:action="@{/people/edit}" th:object="${peopleDto}" method="put">
-
+<form action="#" th:action="@{/people/edit}" th:object="${people}" method="post">
     <table>
         <tr>
             <td>Full Name:</td>
@@ -20,45 +19,57 @@
     <input type="submit" value="Create"/>
     <input type="reset" value="Reset"/>
 </form>
-<h2>Edit mail</h2>
-
-<form action="#" th:action="@{/people/create/mail}" th:object="${mailsDto}" method="post">
-    <input type="hidden" th:field="*{peopleId}"/>
-    <table>
-        <tr>
-            <td>Mail: </td>
-            <td><input type="text" th:field="*{mail}" /></td>
-            <td th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Mail Error</td>
-        </tr>
-        <tr>
-            <td>Mail type:</td>
-            <td><input type="text" th:field="*{mailType}" maxlength="5"/></td>
-            <td th:if="${#fields.hasErrors('mailType')}" th:errors="*{mailType}">Mail type Error</td>
-        </tr>
-    </table>
-
-    <input type="submit" value="Create"/>
-    <input type="reset" value="Reset"/>
-</form>
 <h2>Edit address</h2>
 
-<form action="#" th:action="@{/people/create/address}" th:object="${addressesDto}" method="post">
-    <input type="hidden" th:field="*{peopleId}"/>
-    <table>
-        <tr>
-            <td>Address type: </td>
-            <td><input type="text" th:field="*{addrType}" maxlength="5"/></td>
-            <td th:if="${#fields.hasErrors('addrType')}" th:errors="*{addrType}">Address type Error</td>
-        </tr>
-        <tr>
-            <td>Address info:</td>
-            <td><input type="text" th:field="*{addrInfo}" maxlength="10"/></td>
-            <td th:if="${#fields.hasErrors('addrInfo')}" th:errors="*{addrInfo}">Address info Error</td>
-        </tr>
-    </table>
-
-    <input type="submit" value="Create"/>
-    <input type="reset" value="Reset"/>
+<form action="#" th:action="@{/people/edit}" th:object="${addressesForm}"
+      method="post">
+    <fieldset>
+        <input type="submit" id="submitButton" th:value="Save">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        <table>
+            <thead>
+            <tr>
+                <th> Address type</th>
+                <th> Address info:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="address, itemStat : *{addresses}">
+                <td><input maxlength="5" th:field="*{addresses[__${itemStat.index}__].addrType}" /></td>
+<!--                <td th:if="${#fields.hasErrors('address.addrType')}" th:errors="${address.addrType}">Address type Error</td>-->
+                <td><input maxlength="10"th:field="*{addresses[__${itemStat.index}__].addrInfo}" /></td>
+<!--                <td th:if="${#fields.hasErrors('address.addrInfo')}" th:errors="${address.addrInfo}">Address info Error</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
 </form>
+
+<h2>Edit mail</h2>
+<form action="#" th:action="@{/people/edit/mails}" th:object="${mailsForm}"
+      method="post">
+    <fieldset>
+        <input type="submit" id="submitButton" th:value="Save">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        <table>
+            <thead>
+            <tr>
+                <th> Mail </th>
+                <th> Mail type:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mail, itemStat : *{mails}">
+                <td><input  maxlength="5" th:field="*{mails[__${itemStat.index}__].mail}" /></td>
+                <!--                <td th:if="${#fields.hasErrors('address.addrType')}" th:errors="${address.addrType}">Address type Error</td>-->
+                <td><input  maxlength="10"th:field="*{mails[__${itemStat.index}__].mailType}" /></td>
+                <!--                <td th:if="${#fields.hasErrors('address.addrInfo')}" th:errors="${address.addrInfo}">Address info Error</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</form>
+
 </body>
+
 </html>

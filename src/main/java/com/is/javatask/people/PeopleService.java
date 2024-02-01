@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PeopleService {
@@ -35,11 +36,28 @@ public class PeopleService {
          return peopleRepository.save(peopleEntity);
     }
 
-    public void edit(FullProfileDto profile){
-        PeopleEntity person = peopleRepository.updateById();
-        MailsEntity mail = mailsRepository.updateById();
-        AddressesEntity address = addressesRepository.updateById();
+    public void editMail(List<MailsDto> mail){
+        for (MailsDto mailsDto : mail) {
+            PeopleEntity people = peopleRepository.getReferenceById(mailsDto.getPeopleId());
+            mailsRepository.updateById(mappers.map(mailsDto, people));
+            }
+    }
 
+    public void editAddress(AddressesDto address){
+        PeopleEntity people = peopleRepository.getReferenceById(address.getPeopleId());
+        addressesRepository.updateById(mappers.map(address, people));
+    }
+    public void editPerson(PeopleDto person){
+        peopleRepository.updateById(mappers.map(person));
+    }
+
+    public FullProfileDto getProfile(Integer id){
+        PeopleEntity person = peopleRepository.getReferenceById(id);
+
+        return new FullProfileDto(
+                mappers.map(person),
+                mappers.mapMails(person.getMails()),
+                mappers.mapAddresses(person.getAddresses()));
     }
     public void createMail(MailsDto mailsDto){
         PeopleEntity people = peopleRepository.getReferenceById(mailsDto.getPeopleId());
