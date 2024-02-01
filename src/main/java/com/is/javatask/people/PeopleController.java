@@ -106,4 +106,20 @@ public class PeopleController {
 
         return  "redirect:/people/contacts?id=" + address.getPeopleId();
     }
+
+
+    @GetMapping("/people/delete/address")
+    public String deleteAddress(@RequestParam  Integer id){
+
+        Integer peopleId = peopleService.deleteAddress(id);
+
+        return  "redirect:/people/contacts?id=" + peopleId;
+    }
+    @GetMapping("/people/delete/mail")
+    public String deleteMail(@RequestParam  Integer id){
+
+        Integer peopleId =peopleService.deleteMail(id);
+
+        return  "redirect:/people/contacts?id=" + peopleId;
+    }
 }

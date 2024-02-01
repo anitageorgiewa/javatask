@@ -19,7 +19,7 @@ public class PeopleService {
     private AddressesRepository addressesRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository, Mappers mappers,MailsRepository mailsRepository,AddressesRepository addressesRepository) {
+    public PeopleService(PeopleRepository peopleRepository, Mappers mappers, MailsRepository mailsRepository, AddressesRepository addressesRepository) {
         this.peopleRepository = peopleRepository;
         this.mappers = mappers;
         this.mailsRepository = mailsRepository;
@@ -30,13 +30,13 @@ public class PeopleService {
         return mappers.map(peopleRepository.findByFullNameIgnoreCaseContaining(search));
     }
 
-    public PeopleEntity create(PeopleDto peopleDto){
-         peopleDto.setId(null);
-         PeopleEntity peopleEntity = mappers.map(peopleDto);
-         return peopleRepository.save(peopleEntity);
+    public PeopleEntity create(PeopleDto peopleDto) {
+        peopleDto.setId(null);
+        PeopleEntity peopleEntity = mappers.map(peopleDto);
+        return peopleRepository.save(peopleEntity);
     }
 
-    public void editMail(MailsDto mail){
+    public void editMail(MailsDto mail) {
 
         MailsEntity mailsEntity = mailsRepository.getReferenceById(mail.getId());
         mailsEntity.setMailType(mail.getMailType());
@@ -45,7 +45,8 @@ public class PeopleService {
         mailsRepository.save(mailsEntity);
 
     }
-    public void editAddress(AddressesDto address){
+
+    public void editAddress(AddressesDto address) {
 
         AddressesEntity addressesEntity = addressesRepository.getReferenceById(address.getId());
         addressesEntity.setAddrInfo(address.getAddrInfo());
@@ -55,11 +56,22 @@ public class PeopleService {
 
     }
 
-    public void editPerson(PeopleDto person){
+    public Integer deleteAddress(Integer id) {
+        Integer peopleId = addressesRepository.getReferenceById(id).getPeople().getId();
+        addressesRepository.deleteById(id);
+        return peopleId;
+    }
+    public Integer deleteMail(Integer id) {
+        Integer peopleId = mailsRepository.getReferenceById(id).getPeople().getId();
+        mailsRepository.deleteById(id);
+        return peopleId;
+    }
+
+    public void editPerson(PeopleDto person) {
         peopleRepository.updateById(mappers.map(person));
     }
 
-    public FullProfileDto getProfile(Integer id){
+    public FullProfileDto getProfile(Integer id) {
         PeopleEntity person = peopleRepository.getReferenceById(id);
 
         return new FullProfileDto(
@@ -67,18 +79,21 @@ public class PeopleService {
                 mappers.mapMails(person.getMails()),
                 mappers.mapAddresses(person.getAddresses()));
     }
-    public void createMail(MailsDto mailsDto){
+
+    public void createMail(MailsDto mailsDto) {
         PeopleEntity people = peopleRepository.getReferenceById(mailsDto.getPeopleId());
-        MailsEntity mailsEntity = mappers.map(mailsDto,people);
+        MailsEntity mailsEntity = mappers.map(mailsDto, people);
         people.addMail(mailsEntity);
         mailsRepository.save(mailsEntity);
     }
-    public void createAddress(AddressesDto addressesDto){
+
+    public void createAddress(AddressesDto addressesDto) {
         PeopleEntity people = peopleRepository.getReferenceById(addressesDto.getPeopleId());
         AddressesEntity addressesEntity = mappers.map(addressesDto, people);
         addressesRepository.save(addressesEntity);
     }
-    public ContactsDto getContacts(Integer peopleID){
+
+    public ContactsDto getContacts(Integer peopleID) {
         PeopleEntity people = peopleRepository.getReferenceById(peopleID);
         return new ContactsDto(
                 mappers.mapMails(people.getMails()),
@@ -86,10 +101,11 @@ public class PeopleService {
         );
     }
 
-    public MailsDto getMails(Integer id){
-       return mappers.map(mailsRepository.getReferenceById(id));
+    public MailsDto getMails(Integer id) {
+        return mappers.map(mailsRepository.getReferenceById(id));
     }
-    public AddressesDto getAddress(Integer id){
+
+    public AddressesDto getAddress(Integer id) {
         return mappers.map(addressesRepository.getReferenceById(id));
     }
 }
