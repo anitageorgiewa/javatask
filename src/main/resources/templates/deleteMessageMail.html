@@ -5,8 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<h1>New person created!</h1>
-<button onclick="window.location.href='/people';">Home
-</button>
+<h1>Do you really want to delete this row?!</h1>
+<a th:href="@{/people/delete/m(id=${id})}">Delete</a>
 </body>
 </html>

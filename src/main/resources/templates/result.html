@@ -11,6 +11,8 @@
 <body>
 <h1>Result</h1>
 <table>
+
+    <tbody>
     <thead>
     <tr>
         <th> id </th>
@@ -18,10 +20,6 @@
         <th> pin </th>
     </tr>
     </thead>
-    <tbody>
-    <tr th:if="${peopleResults.empty}">
-        <td colspan="2"> No Results </td>
-    </tr>
     <tr th:each="people : ${peopleResults}">
 
         <td><span th:text="${people.id}"> ID </span></td>
@@ -31,6 +29,7 @@
             <a th:href="@{/people/contacts(id=${people.id})}">More info</a>
         </td>
     </tr>
+
     </tbody>
 </table>
 </td>

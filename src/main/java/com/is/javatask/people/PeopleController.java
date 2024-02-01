@@ -1,5 +1,4 @@
 package com.is.javatask.people;
-
 import com.is.javatask.people.dto.*;
 import com.is.javatask.people.model.PeopleEntity;
 import jakarta.validation.Valid;
@@ -39,7 +38,8 @@ public class PeopleController {
     }
 
     @GetMapping("/people/contacts")
-    public String showContacts(@RequestParam("id") Integer peopleId, Model model) {
+    public String showContacts(@RequestParam("id") Integer peopleId,
+                               Model model) {
         var contacts = peopleService.getContacts(peopleId);
         model.addAttribute("contacts", contacts);
         return "contacts";
@@ -101,7 +101,7 @@ public class PeopleController {
         }
         peopleService.editMail(mails);
 
-        return  "redirect:/people/contacts?id=" + mails.getPeopleId();
+        return  "redirectAfterUpdate" ;
     }
     @GetMapping("/people/edit/address")
     public String getInfoForUpdateAddress(@RequestParam("id") Integer id,Model model){
@@ -117,22 +117,29 @@ public class PeopleController {
         }
         peopleService.editAddress(address);
 
-        return  "redirect:/people/contacts?id=" + address.getPeopleId();
+        return  "redirectAfterUpdate";
     }
 
+ @GetMapping("/people/delete/address")
+ public String deleteAddress(@RequestParam Integer id, Model model){
+     model.addAttribute("id",id);
+     return  "deleteMessageAddr";
+ }
 
-    @GetMapping("/people/delete/address")
-    public String deleteAddress(@RequestParam  Integer id){
-
-        Integer peopleId = peopleService.deleteAddress(id);
-
-        return  "redirect:/people/contacts?id=" + peopleId;
-    }
+ @GetMapping("/people/delete/addr")
+ public String deleteAddressOK(@RequestParam Integer id){
+     Integer peopleId = peopleService.deleteAddress(id);
+     return  "redirect:/people/contacts?id=" + peopleId;
+ }
     @GetMapping("/people/delete/mail")
-    public String deleteMail(@RequestParam  Integer id){
+    public String deleteMail(@RequestParam Integer id, Model model){
+        model.addAttribute("id",id);
+        return  "deleteMessageMail.html";
+    }
 
+    @GetMapping("/people/delete/m")
+    public String deleteMailOK(@RequestParam  Integer id){
         Integer peopleId =peopleService.deleteMail(id);
-
         return  "redirect:/people/contacts?id=" + peopleId;
     }
 }
